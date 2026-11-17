@@ -1,0 +1,43 @@
+{
+  "name": "dsh-find-in-sessions",
+  "version": "0.1.0",
+  "description": "Ctrl+F cross-session keyword search bar for the DeepSeek Harness web GUI",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "search",
+    "session"
+  ],
+  "author": {
+    "name": "ChengGuanjin666",
+    "email": "3285676576@qq.com",
+    "url": "https://github.com/ChengGuanjin666"
+  },
+  "license": "MIT"
+}

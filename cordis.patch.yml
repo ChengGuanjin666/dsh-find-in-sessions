@@ -1,0 +1,3 @@
+- insert:
+    - id: session-search
+      name: dsh-find-in-sessions
