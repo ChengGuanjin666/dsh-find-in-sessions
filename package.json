@@ -1,7 +1,7 @@
 {
   "name": "dsh-find-in-sessions",
-  "version": "0.1.0",
-  "description": "Ctrl+F cross-session keyword search bar for the DeepSeek Harness web GUI",
+  "version": "0.2.0",
+  "description": "Ctrl+F cross-session keyword search for DeepSeek Harness, backed by a local SQLite FTS5 index",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -14,6 +14,7 @@
     "lib/store.js",
     "cordis.patch.yml",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "dsh": {
