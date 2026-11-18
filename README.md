@@ -102,12 +102,17 @@ DeepSeek Harness 插件：`Ctrl+F` 呼出查找栏，按关键词检索**所有�
 ## 安装
 
 ```powershell
-# 从 npm
-dsh plugin --profile web add dsh-find-in-sessions
+# 从 GitHub 装（跟最新 main）
+dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions
+
+# 锁定某个版本
+dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions#v0.2.0
 
 # 从本地源码（开发时）
 dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 ```
+
+本插件没有发布到 npm，`github:` 是 pnpm 支持的仓库协议，装出来的内容与仓库一致。
 
 装完重启 `dsh web`。插件同时有宿主半和浏览器半，两半都在启动时加载。
 
