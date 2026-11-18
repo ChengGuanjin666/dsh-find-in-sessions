@@ -41,5 +41,13 @@
     "email": "3285676576@qq.com",
     "url": "https://github.com/ChengGuanjin666"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChengGuanjin666/dsh-find-in-sessions.git"
+  },
+  "homepage": "https://github.com/ChengGuanjin666/dsh-find-in-sessions#readme",
+  "bugs": {
+    "url": "https://github.com/ChengGuanjin666/dsh-find-in-sessions/issues"
+  },
   "license": "MIT"
 }

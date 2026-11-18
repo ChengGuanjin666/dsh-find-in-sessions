@@ -102,7 +102,11 @@ DeepSeek Harness 插件：`Ctrl+F` 呼出查找栏，按关键词检索**所有�
 ## 安装
 
 ```powershell
-dsh plugin --profile web add <本目录或 tarball 路径>
+# 从 npm
+dsh plugin --profile web add dsh-find-in-sessions
+
+# 从本地源码（开发时）
+dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 ```
 
 装完重启 `dsh web`。插件同时有宿主半和浏览器半，两半都在启动时加载。
