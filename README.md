@@ -50,7 +50,7 @@ dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 | 全局检索 | 侧栏预览 |
 | 工具检索（任意范围） | 侧栏预览 |
 
-预览页给「命中的那一条 + 前后各一条」，关键词高亮，右上角「会话定位」固定、不随内容滚动。没装 `dsh-better-sidebar` 时，全局检索退回跳转，工具检索会明说需要在侧栏预览。
+预览页给「命中的那一条 + 前后各一条」，关键词高亮，右上角「会话定位」固定、不随内容滚动。**这三类落点全部依赖 `dsh-better-sidebar`**，缺它时见「兼容性」一节的降级说明。
 
 三个不那么直观的取舍：
 
@@ -64,7 +64,9 @@ dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 |---|---|
 | DeepSeek Harness | 在 **0.2.2-rc.1** 上实测通过，其他版本未验证 |
 | Node.js | **≥ 24.9.0**（`node:sqlite`，与 dsh 本体一致） |
-| 可选 | `dsh-better-sidebar`（侧栏预览；缺失时全局检索退化为跳转） |
+| **前置依赖** | **`dsh-better-sidebar` ≥ 0.30.0** —— 全局检索、工具检索、超大会话三类的落点全部是它的侧栏预览 |
+
+`dsh-better-sidebar` 没装的话插件不会报错，但**只剩一半功能**：会话内检索照常跳转高亮，全局检索退化成"跳到那个会话"、工具检索直接没有落点、超过 300 条的会话两样都不行。所以按前置依赖对待，先装它。
 
 **为什么只能给版本号、给不出兼容区间**：插件依赖宿主内部实现——`[data-conversation-session]` / `[data-chat-turn]` / `[data-chat-node-key]` / `[data-chat-call-id]` 等 DOM 属性、`sessionPersistence` 的 `list / stat / open`、`webServer.register`、`ISession.loadThrough`。这些都没有稳定性契约。宿主升级后若面板打不开或跳转落空，先查这几处。
 
