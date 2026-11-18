@@ -11,6 +11,7 @@
   "files": [
     "lib/index.js",
     "lib/client.js",
+    "lib/store.js",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"
