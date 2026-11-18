@@ -13,14 +13,27 @@ DeepSeek Harness 插件：跨会话检索历史对话的正文与工具输出，
 
 ## 安装
 
+需要先装前置插件 `dsh-better-sidebar`，否则全局检索、工具检索和超大会话的预览都没有落点（详见「兼容性」）。
+
 ```powershell
-# 跟最新 main
+# 1. 前置依赖
+dsh plugin --profile web add dsh-better-sidebar
+
+# 2. 本插件
 dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions
+```
 
-# 锁定版本
+`dsh-better-sidebar` 需要 ≥ 0.30.0（实测 0.32.0 也可以，它的 peer 要求是 dsh `^0.2.2-rc.1`）；要锁定版本就写 `dsh-better-sidebar@0.32.0`。
+
+本插件也可以锁定版本装：
+
+```powershell
 dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions#v0.2.0
+```
 
-# 本地源码（开发时）
+从仓库本地装（改代码时用）：
+
+```powershell
 dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 ```
 
