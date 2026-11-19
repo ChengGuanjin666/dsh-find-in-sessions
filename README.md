@@ -19,15 +19,16 @@ DeepSeek Harness 插件：跨会话检索历史对话的正文与工具输出，
 # 1. 前置依赖
 dsh plugin --profile web add dsh-better-sidebar
 
-# 2. 本插件
-dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions
+# 2. 本插件（npm）
+dsh plugin --profile web add dsh-find-in-sessions
 ```
 
 `dsh-better-sidebar` 需要 ≥ 0.30.0（实测 0.32.0 也可以，它的 peer 要求是 dsh `^0.2.2-rc.1`）；要锁定版本就写 `dsh-better-sidebar@0.32.0`。
 
-本插件也可以锁定版本装：
+也可以直接从 GitHub 装（跟最新 main，或锁定 tag）：
 
 ```powershell
+dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions
 dsh plugin --profile web add github:ChengGuanjin666/dsh-find-in-sessions#v0.2.0
 ```
 
