@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.2.3 — 2026-11-25
+
+### 修复
+
+- **全局检索只显示一小部分命中，其余会话的命中完全点不到**。两组错误叠加：
+  - `search()` 给每个会话算的 `from` 用了 `groups.length`（组序号），不是「已排好的条数」。实测 8 个组算出的区间 Σ(to-from) = -1、max(to) = 5，前端按 `hits.slice(from, to)` 铺结果时区间重叠或倒挂，62 条命中只铺出 9 条。
+  - 补查询按 `mtime DESC` 跨组排序，同一个会话的两行会被别的会话隔开（实测组内不连续），所以「一个组 = 一段连续区间」这个前提本身不成立。
+  - 现在拿到行后按分组顺序重新聚簇、`from/to` 改用累计条数。6 个查询 + 5 个边界（当前会话内 / 角色筛选 / 时间窗口 / 无命中 / 工具输出）复验：区间全部连续、组内同源、`hits` 全覆盖。
+- 组标题右侧的「N 处」与展开内容此前可能不属于同一个会话，一并随之修正。
+
+### 新增
+
+- `package.json` 声明 `engines.dsh: ">=0.2.2-rc.1 <0.3.0-0"`。DSH 的插件兼容性检查优先读这个字段（缺省才回退到 `peerDependencies`），装错版本会在安装/启动时直接拒绝，而不是加载后静默退化。
+- 上界写成 `0.3.0-0` 而不是 `0.3.0`：`<0.3.0` 在 `includePrerelease` 下会放行 `0.3.0-rc.1` 这类预发布版。
+
+### 验证
+
+- 在 DSH 0.2.2-rc.5 上实测四条链路：宿主半加载与 `/session-search`（1313 会话 / 14163 行正文 / 33827 行工具输出）、前端模块加载、当前会话内就地跳转（`CSS.highlights` 有 Range）、全局检索的侧栏预览 tab。
+- 逐项核对宿主契约，rc.1 → rc.5 之间未变：`sessionPersistence` 的 `list/stat/open/read/close`、`webServer.register`、`connection.requestRejection`、`ctx.effect(fn, label)`、`turn/start` / `user/message` / `assistant/message` / `tool/result` 的事件结构、`Snapshot.sizeBytes`、`[data-chat-turn]` / `[data-chat-node-key]` / `[data-chat-call-id]` / `[data-conversation-session]` / `[data-row-key]`、`shell.overlay`、`ctx.sessions.binding`、`ctx.uiWorkspace.openSession`、`ISession.loadThrough`、`ctx.betterSidebar`。
+
 ## 0.2.2 — 2026-11-19
 
 ### 变更

@@ -76,13 +76,23 @@ dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 
 | | 要求 |
 |---|---|
-| DeepSeek Harness | 在 **0.2.2-rc.1** 上实测通过，其他版本未验证 |
+| DeepSeek Harness | **`>=0.2.2-rc.1 <0.3.0-0`**，见下方「已实测的版本」 |
 | Node.js | **≥ 24.9.0**（`node:sqlite`，与 dsh 本体一致） |
 | **前置依赖** | **`dsh-better-sidebar` ≥ 0.30.0** —— 全局检索、工具检索、超大会话三类的落点全部是它的侧栏预览 |
 
+范围同时写在 `package.json` 的 `engines.dsh` 里。DSH 的插件兼容性检查优先读这个字段（没有它才回退到 `peerDependencies`），所以装到区间外的版本会在安装或启动时被直接拒绝，而不是加载后静默退化。上界是 `0.3.0-0` 而不是 `0.3.0`：`<0.3.0` 在 `includePrerelease` 下会放行 `0.3.0-rc.1` 这类预发布版。
+
+**已实测的版本**：
+
+| 版本 | 状态 |
+|---|---|
+| 0.2.2-rc.1 | 当时版本实测通过 |
+| 0.2.2-rc.5 | 0.2.3 逐项核对宿主契约后实测通过 |
+| 0.2.2-rc.2 / rc.3 / rc.4 | 未单独实测；同期 DSH 升级指南只有 `deepseek-refusal-code`（LLM 层）和 `web-search-deepseek-model-default` 两条，未涉及本插件依赖的 API 与 DOM |
+
 `dsh-better-sidebar` 没装的话插件不会报错，但**只剩一半功能**：会话内检索照常跳转高亮，全局检索退化成"跳到那个会话"、工具检索直接没有落点、目标在窗口外的命中两样都不行。所以按前置依赖对待，先装它。
 
-**为什么只能给版本号、给不出兼容区间**：插件依赖宿主内部实现——`[data-conversation-session]` / `[data-chat-turn]` / `[data-chat-node-key]` / `[data-chat-call-id]` 等 DOM 属性、`sessionPersistence` 的 `list / stat / open`、`webServer.register`、`ISession.loadThrough`。这些都没有稳定性契约。宿主升级后若面板打不开或跳转落空，先查这几处。
+**区间下界为什么不能再低**：插件依赖宿主内部实现——`[data-conversation-session]` / `[data-chat-turn]` / `[data-chat-node-key]` / `[data-chat-call-id]` 等 DOM 属性、`sessionPersistence` 的 `list / stat / open`、`webServer.register`、`ISession.loadThrough`。这些都没有稳定性契约，0.2.1 及更早没有 `webServer.register` 与 `ISession.loadThrough` 的现有形态。宿主升级后若面板打不开或跳转落空，先查这几处。
 
 ## 已知限制
 
@@ -90,7 +100,7 @@ dsh plugin --profile web add D:\DSH\创造模式\dsh-find-in-sessions
 - 大小写不敏感（对含字母的关键词），但不做全半角、简繁、拼音归一化。
 - **单字中文查询 451–575 ms**：一个汉字凑不出 bigram，索引用不上，只能全表扫。
 - 工具输出默认不进索引，第一次切到「工具」才建（读全部会话，约两分钟）。
-- 索引库在 `~/.dsh/cache/dsh-find-in-sessions/`，体积随语料增长（本机 1150 个会话 → 178 MB），删掉会自动重建。
+- 索引库在 `~/.dsh/cache/dsh-find-in-sessions/`，体积随语料增长（本机 1313 个会话 → 197 MB），删掉会自动重建。旧版本留下的 `body.json.gz` / `tool.json.gz` 从 0.2.0 起不再读取，可以直接删。
 - 正在写的会话，最新几条可能还没落盘，再搜一次即可。
 
 ## 开发

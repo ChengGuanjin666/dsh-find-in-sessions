@@ -1,6 +1,6 @@
 {
   "name": "dsh-find-in-sessions",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Ctrl+F cross-session keyword search for DeepSeek Harness, backed by a local SQLite FTS5 index",
   "type": "module",
   "main": "lib/index.js",
@@ -28,7 +28,8 @@
     }
   },
   "engines": {
-    "node": ">=24.9.0"
+    "node": ">=24.9.0",
+    "dsh": ">=0.2.2-rc.1 <0.3.0-0"
   },
   "keywords": [
     "dsh",
